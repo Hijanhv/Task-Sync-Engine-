@@ -2,6 +2,11 @@
 
 A **zero-code task synchronization platform** that works as both a **user-triggered tool** and an **autonomous bot**. Perfect for non-technical users and companies!
 
+[![Deploy to DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/Hijanhv/Task-Sync-Engine-/tree/main)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/Hijanhv/Task-Sync-Engine-)
+
+**🚀 Repository:** https://github.com/Hijanhv/Task-Sync-Engine-
+
 ## 🎯 No Coding Required!
 
 **Everything is point-and-click:**

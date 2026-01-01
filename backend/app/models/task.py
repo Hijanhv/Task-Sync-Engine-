@@ -38,6 +38,7 @@ class Task(BaseModel):
     tags: list[str] = Field(default_factory=list, description="Task tags")
     created_at: datetime = Field(default_factory=datetime.utcnow, description="Creation timestamp")
     updated_at: datetime = Field(default_factory=datetime.utcnow, description="Last update timestamp")
+    metadata: dict = Field(default_factory=dict, description="Additional metadata from integrations")
     
     class Config:
         use_enum_values = True

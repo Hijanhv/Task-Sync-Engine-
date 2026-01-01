@@ -29,7 +29,16 @@ class Settings:
     # Source and destination configuration (can be extended)
     SOURCE_API_URL: Optional[str] = os.getenv("SOURCE_API_URL")
     DESTINATION_API_URL: Optional[str] = os.getenv("DESTINATION_API_URL")
-    
+
+    # GitHub Integration
+    GITHUB_TOKEN: Optional[str] = os.getenv("GITHUB_TOKEN")
+    GITHUB_SOURCE_REPO: Optional[str] = os.getenv("GITHUB_SOURCE_REPO")  # Format: "owner/repo"
+    GITHUB_DEST_REPO: Optional[str] = os.getenv("GITHUB_DEST_REPO")  # Format: "owner/repo"
+
+    # Integration mode
+    SOURCE_TYPE: str = os.getenv("SOURCE_TYPE", "mock")  # "mock" or "github"
+    DEST_TYPE: str = os.getenv("DEST_TYPE", "mock")  # "mock" or "github"
+
     # CORS settings
     CORS_ORIGINS: list = os.getenv("CORS_ORIGINS", "*").split(",") if os.getenv("CORS_ORIGINS") != "*" else ["*"]
 

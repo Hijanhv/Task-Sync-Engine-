@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Sync Engine - Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔄 Task Sync Engine</h1>
+            <p class="subtitle">Dual-Mode Synchronization: User Tool + Autonomous Bot</p>
+            <div style="text-align: center; margin-top: 1rem;">
+                <button class="btn btn-info" onclick="window.location.href='/static/settings.html'">
+                    ⚙️ Settings
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='/static/setup.html'">
+                    🚀 Setup Wizard
+                </button>
+            </div>
+        </header>
+
+        <div class="mode-indicator">
+            <div class="mode-badge" id="modeBadge">
+                <span id="modeIcon">🤖</span>
+                <span id="modeText">Loading...</span>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <!-- Control Panel -->
+            <section class="card">
+                <h2>⚡ Control Panel</h2>
+                <div class="controls">
+                    <button class="btn btn-primary" id="syncBtn" onclick="triggerSync()">
+                        <span class="btn-icon">🔄</span>
+                        Sync Now (User Tool Mode)
+                    </button>
+                    <button class="btn btn-secondary" id="dryRunBtn" onclick="dryRunSync()">
+                        <span class="btn-icon">🔍</span>
+                        Dry Run
+                    </button>
+                    <button class="btn btn-info" id="refreshBtn" onclick="refreshStatus()">
+                        <span class="btn-icon">🔃</span>
+                        Refresh Status
+                    </button>
+                </div>
+            </section>
+
+            <!-- Status Section -->
+            <section class="card">
+                <h2>📊 Current Status</h2>
+                <div class="status-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">Total Syncs</div>
+                        <div class="stat-value" id="totalSyncs">-</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Last Sync</div>
+                        <div class="stat-value" id="lastSync">Never</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Tasks in DB</div>
+                        <div class="stat-value" id="tasksCount">-</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Auto-Sync</div>
+                        <div class="stat-value" id="autoSyncStatus">-</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sync Result Section -->
+            <section class="card" id="resultSection" style="display: none;">
+                <h2>✅ Last Sync Result</h2>
+                <div id="syncResult" class="result-box"></div>
+            </section>
+
+            <!-- Sync History -->
+            <section class="card">
+                <h2>📜 Sync History</h2>
+                <div id="historyContainer" class="history-list">
+                    <p class="empty-state">No sync history yet. Click "Sync Now" to start!</p>
+                </div>
+            </section>
+
+            <!-- System Info -->
+            <section class="card">
+                <h2>ℹ️ System Information</h2>
+                <div class="info-grid" id="systemInfo">
+                    <div class="info-item">
+                        <span class="info-label">App Name:</span>
+                        <span class="info-value" id="appName">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Version:</span>
+                        <span class="info-value" id="version">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Mode:</span>
+                        <span class="info-value" id="mode">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Sync Interval:</span>
+                        <span class="info-value" id="syncInterval">-</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>Built with ❤️ | Supports both User-Triggered (Tool) and Autonomous (Bot) execution</p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

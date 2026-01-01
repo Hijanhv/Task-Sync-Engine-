@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # Task Sync Engine Backend
+  task-sync-engine:
+    build: .
+    container_name: task-sync-engine
+    ports:
+      - "8000:8000"
+    environment:
+      # App Configuration
+      - DEBUG=False
+      - HOST=0.0.0.0
+      - PORT=8000
+      
+      # Sync Configuration (Can be changed via UI)
+      - AUTO_SYNC_ENABLED=false
+      - SYNC_INTERVAL_SECONDS=300
+      
+      # Optional: External integrations
+      # - SOURCE_API_URL=https://your-source-api.com
+      # - DESTINATION_API_URL=https://your-dest-api.com
+    volumes:
+      # Persist configuration data
+      - ./data:/app/data
+      # Mount frontend files
+      - ./frontend:/app/frontend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Optional: PostgreSQL Database (for production)
+  # Uncomment when ready to use real database
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: task-sync-db
+  #   environment:
+  #     - POSTGRES_DB=tasksync
+  #     - POSTGRES_USER=tasksync
+  #     - POSTGRES_PASSWORD=changeme123
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   restart: unless-stopped
+
+  # Optional: Redis Cache (for production)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: task-sync-redis
+  #   ports:
+  #     - "6379:6379"
+  #   restart: unless-stopped
+  #   command: redis-server --appendonly yes
+  #   volumes:
+  #     - redis_data:/data
+
+volumes:
+  # Uncomment when using PostgreSQL
+  # postgres_data:
+  # redis_data:
+  data:
+
+networks:
+  default:
+    name: task-sync-network

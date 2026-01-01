@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Wizard - Task Sync Engine</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .wizard-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        
+        .wizard-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .wizard-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 0;
+        }
+        
+        .wizard-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .wizard-step.active .step-circle {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        
+        .wizard-step.completed .step-circle {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .wizard-step.active .step-label {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .wizard-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            min-height: 400px;
+        }
+        
+        .step-content {
+            display: none;
+        }
+        
+        .step-content.active {
+            display: block;
+        }
+        
+        .wizard-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .integration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .integration-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .integration-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .integration-card.selected {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .integration-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        
+        .success-icon {
+            font-size: 5rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Welcome to Task Sync Engine</h1>
+            <p class="subtitle">No-Code Setup Wizard - Get started in 5 minutes!</p>
+        </header>
+
+        <div class="wizard-container">
+            <!-- Wizard Steps -->
+            <div class="wizard-steps">
+                <div class="wizard-step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Welcome</div>
+                </div>
+                <div class="wizard-step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Choose Integrations</div>
+                </div>
+                <div class="wizard-step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Configure</div>
+                </div>
+                <div class="wizard-step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Settings</div>
+                </div>
+                <div class="wizard-step" data-step="5">
+                    <div class="step-circle">5</div>
+                    <div class="step-label">Complete</div>
+                </div>
+            </div>
+
+            <!-- Wizard Content -->
+            <div class="wizard-content">
+                <!-- Step 1: Welcome -->
+                <div class="step-content active" id="step1">
+                    <h2>👋 Welcome!</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 1.5rem;">
+                        Task Sync Engine helps you automatically synchronize tasks between different platforms like Jira, GitHub, Trello, and more.
+                    </p>
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(79, 70, 229, 0.1); border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <h3>✨ No Coding Required!</h3>
+                        <ul style="margin-top: 1rem; line-height: 2;">
+                            <li>✅ Connect your tools in clicks</li>
+                            <li>✅ Set up sync rules visually</li>
+                            <li>✅ Automatic or manual sync</li>
+                            <li>✅ Test connections instantly</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top: 2rem; color: var(--text-secondary);">
+                        This wizard will guide you through setting up your first synchronization. It takes about 5 minutes.
+                    </p>
+                </div>
+
+                <!-- Step 2: Choose Integrations -->
+                <div class="step-content" id="step2">
+                    <h2>🔌 Choose Your Integrations</h2>
+                    <p>Select the platforms you want to sync. You can add more later!</p>
+                    
+                    <div class="integration-grid" id="integrationGrid">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Step 3: Configure Integrations -->
+                <div class="step-content" id="step3">
+                    <h2>⚙️ Configure Your Integrations</h2>
+                    <p>Enter your credentials for the selected platforms</p>
+                    
+                    <div id="integrationForms">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Step 4: Settings -->
+                <div class="step-content" id="step4">
+                    <h2>🎛️ Sync Settings</h2>
+                    <p>Configure how and when synchronization happens</p>
+                    
+                    <div style="margin-top: 2rem;">
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="autoSyncEnabled" checked>
+                                <label for="autoSyncEnabled" class="form-label">Enable Automatic Sync (Bot Mode)</label>
+                            </div>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                                When enabled, sync runs automatically in the background
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Sync Interval</label>
+                            <select id="syncInterval" class="form-select">
+                                <option value="60">Every 1 minute (Testing)</option>
+                                <option value="300" selected>Every 5 minutes</option>
+                                <option value="600">Every 10 minutes</option>
+                                <option value="900">Every 15 minutes</option>
+                                <option value="1800">Every 30 minutes</option>
+                                <option value="3600">Every 1 hour</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Notification Email (Optional)</label>
+                            <input type="email" id="notificationEmail" class="form-input" 
+                                   placeholder="your@email.com">
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                                Get notified about sync status and errors
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Timezone</label>
+                            <select id="timezone" class="form-select">
+                                <option value="UTC" selected>UTC</option>
+                                <option value="America/New_York">Eastern Time (US)</option>
+                                <option value="America/Chicago">Central Time (US)</option>
+                                <option value="America/Denver">Mountain Time (US)</option>
+                                <option value="America/Los_Angeles">Pacific Time (US)</option>
+                                <option value="Europe/London">London</option>
+                                <option value="Europe/Paris">Paris</option>
+                                <option value="Asia/Tokyo">Tokyo</option>
+                                <option value="Asia/Shanghai">Shanghai</option>
+                                <option value="Asia/Kolkata">India</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Complete -->
+                <div class="step-content" id="step5">
+                    <div class="success-icon">🎉</div>
+                    <h2 style="text-align: center;">Setup Complete!</h2>
+                    <p style="text-align: center; font-size: 1.1rem; margin-top: 1rem;">
+                        Your Task Sync Engine is configured and ready to use.
+                    </p>
+                    
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+                        <h3>✅ What's Next?</h3>
+                        <ul style="margin-top: 1rem; line-height: 2;">
+                            <li>📊 View your dashboard</li>
+                            <li>🔄 Trigger your first sync</li>
+                            <li>⚙️ Fine-tune your settings</li>
+                            <li>📈 Monitor sync history</li>
+                        </ul>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="goToDashboard()" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                            <span class="btn-icon">🚀</span>
+                            Go to Dashboard
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Wizard Actions -->
+                <div class="wizard-actions">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="previousStep()" style="display: none;">
+                        ← Previous
+                    </button>
+                    <div></div>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">
+                        Next →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+        let selectedIntegrations = [];
+        let availableIntegrations = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAvailableIntegrations();
+        });
+
+        // Load available integrations
+        async function loadAvailableIntegrations() {
+            try {
+                const response = await fetch('/api/available-integrations');
+                const data = await response.json();
+                availableIntegrations = data.integrations;
+                renderIntegrationGrid();
+            } catch (error) {
+                console.error('Failed to load integrations:', error);
+            }
+        }
+
+        // Render integration selection grid
+        function renderIntegrationGrid() {
+            const grid = document.getElementById('integrationGrid');
+            grid.innerHTML = availableIntegrations.map(integration => `
+                <div class="integration-card" onclick="toggleIntegration('${integration.type}')" 
+                     data-integration="${integration.type}">
+                    <div class="integration-icon">${integration.icon}</div>
+                    <h3>${integration.name}</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        ${integration.description}
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        // Toggle integration selection
+        function toggleIntegration(type) {
+            const card = document.querySelector(`[data-integration="${type}"]`);
+            const index = selectedIntegrations.indexOf(type);
+            
+            if (index > -1) {
+                selectedIntegrations.splice(index, 1);
+                card.classList.remove('selected');
+            } else {
+                selectedIntegrations.push(type);
+                card.classList.add('selected');
+            }
+        }
+
+        // Navigate to next step
+        async function nextStep() {
+            if (currentStep === 2 && selectedIntegrations.length === 0) {
+                alert('Please select at least one integration');
+                return;
+            }
+
+            if (currentStep === 2) {
+                renderIntegrationForms();
+            }
+
+            if (currentStep === 4) {
+                await saveConfiguration();
+            }
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateWizard();
+            }
+        }
+
+        // Navigate to previous step
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateWizard();
+            }
+        }
+
+        // Update wizard UI
+        function updateWizard() {
+            // Update steps
+            document.querySelectorAll('.wizard-step').forEach((step, index) => {
+                const stepNum = index + 1;
+                if (stepNum < currentStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else if (stepNum === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
+            });
+
+            // Update content
+            document.querySelectorAll('.step-content').forEach((content, index) => {
+                content.classList.toggle('active', index + 1 === currentStep);
+            });
+
+            // Update buttons
+            document.getElementById('prevBtn').style.display = currentStep === 1 ? 'none' : 'block';
+            document.getElementById('nextBtn').style.display = currentStep === totalSteps ? 'none' : 'block';
+        }
+
+        // Render configuration forms for selected integrations
+        function renderIntegrationForms() {
+            const container = document.getElementById('integrationForms');
+            container.innerHTML = selectedIntegrations.map(type => {
+                const integration = availableIntegrations.find(i => i.type === type);
+                return `
+                    <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                        <h3>${integration.icon} ${integration.name}</h3>
+                        <div class="form-group">
+                            <label class="form-label">Connection Name</label>
+                            <input type="text" class="form-input" id="${type}_name" 
+                                   placeholder="e.g., My ${integration.name}" value="${integration.name}">
+                        </div>
+                        ${integration.required_fields.map(field => `
+                            <div class="form-group">
+                                <label class="form-label">${formatFieldName(field)}</label>
+                                <input type="${field.includes('token') || field.includes('key') ? 'password' : 'text'}" 
+                                       class="form-input" id="${type}_${field}" 
+                                       placeholder="Enter your ${field}">
+                            </div>
+                        `).join('')}
+                        <button class="btn btn-info" onclick="testConnection('${type}')">
+                            🔍 Test Connection
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Format field name for display
+        function formatFieldName(field) {
+            return field.split('_').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+
+        // Test connection
+        async function testConnection(type) {
+            alert(`Testing connection to ${type}... (Mock - will be implemented in production)`);
+        }
+
+        // Save configuration
+        async function saveConfiguration() {
+            try {
+                // Save settings
+                const settings = {
+                    auto_sync_enabled: document.getElementById('autoSyncEnabled').checked,
+                    sync_interval_seconds: parseInt(document.getElementById('syncInterval').value),
+                    timezone: document.getElementById('timezone').value,
+                    notification_email: document.getElementById('notificationEmail').value || null
+                };
+
+                await fetch('/api/settings', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                });
+
+                // Save integrations
+                for (const type of selectedIntegrations) {
+                    const integration = availableIntegrations.find(i => i.type === type);
+                    const credentials = {};
+                    
+                    integration.required_fields.forEach(field => {
+                        const value = document.getElementById(`${type}_${field}`)?.value;
+                        if (value) credentials[field] = value;
+                    });
+
+                    await fetch('/api/integrations', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            integration_type: type,
+                            name: document.getElementById(`${type}_name`).value,
+                            enabled: true,
+                            auth_type: integration.auth_types[0],
+                            credentials: credentials,
+                            source_config: {},
+                            destination_config: {}
+                        })
+                    });
+                }
+
+                // Mark setup as complete
+                await fetch('/api/setup/complete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+
+            } catch (error) {
+                console.error('Failed to save configuration:', error);
+                alert('Failed to save configuration. Please try again.');
+            }
+        }
+
+        // Go to dashboard
+        function goToDashboard() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

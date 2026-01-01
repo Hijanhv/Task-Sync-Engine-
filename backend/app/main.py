@@ -36,10 +36,10 @@ app.include_router(sync.router, prefix="/api", tags=["Sync"])
 app.include_router(config.router, prefix="/api", tags=["Configuration"])
 
 # Serve frontend
-frontend_path = os.path.join(os.path.dirname(__file__), "../../frontend")
+frontend_path = os.path.join(os.path.dirname(__file__), "../frontend")
 if os.path.exists(frontend_path):
     app.mount("/static", StaticFiles(directory=frontend_path), name="static")
-    
+
     @app.get("/")
     async def serve_frontend():
         """Serve the frontend UI"""

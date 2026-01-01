@@ -31,11 +31,7 @@ class Settings:
     DESTINATION_API_URL: Optional[str] = os.getenv("DESTINATION_API_URL")
     
     # CORS settings
-    CORS_ORIGINS: list = [
-        "http://localhost:3000",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-    ]
+    CORS_ORIGINS: list = os.getenv("CORS_ORIGINS", "*").split(",") if os.getenv("CORS_ORIGINS") != "*" else ["*"]
 
 
 settings = Settings()

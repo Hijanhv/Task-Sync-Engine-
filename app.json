@@ -1,0 +1,25 @@
+{
+  "name": "Task Sync Engine",
+  "description": "Zero-code task synchronization platform with dual execution modes (user-triggered + autonomous bot)",
+  "repository": "https://github.com/Hijanhv/Task-Sync-Engine-",
+  "logo": "https://raw.githubusercontent.com/Hijanhv/Task-Sync-Engine-/main/docs/logo.png",
+  "keywords": ["task-sync", "automation", "no-code", "jira", "github", "trello"],
+  "success_url": "/static/setup.html",
+  "env": {
+    "AUTO_SYNC_ENABLED": {
+      "description": "Enable automatic background sync (Bot Mode)",
+      "value": "false",
+      "required": false
+    },
+    "SYNC_INTERVAL_SECONDS": {
+      "description": "How often to sync in seconds (e.g., 300 for 5 minutes)",
+      "value": "300",
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  }
+}

@@ -2,10 +2,24 @@
 
 A **zero-code task synchronization platform** that works as both a **user-triggered tool** and an **autonomous bot**. Perfect for non-technical users and companies!
 
+**🌐 Live Demo:** https://task-sync-engine-production.up.railway.app
+
 [![Deploy to DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/Hijanhv/Task-Sync-Engine-/tree/main)
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/Hijanhv/Task-Sync-Engine-)
 
 **🚀 Repository:** https://github.com/Hijanhv/Task-Sync-Engine-
+
+## 🌟 Live Production Deployment
+
+**✅ Currently Running:** https://task-sync-engine-production.up.railway.app
+
+**Features:**
+- 🔗 **GitHub Integration** - Syncs real issues from GitHub repositories
+- 📊 **Live Dashboard** - Real-time task synchronization status
+- 🚀 **Production Ready** - Deployed on Railway with auto-deploy on push
+- 🔒 **Secure** - Using GitHub OAuth tokens for API access
+
+---
 
 ## 🎯 No Coding Required!
 
@@ -15,20 +29,27 @@ A **zero-code task synchronization platform** that works as both a **user-trigge
 - ✅ One-command deployment
 - ✅ No technical skills needed
 
-## 🚀 Quick Start (5 Minutes)
+## 🚀 Quick Start
 
-### Step 1: Install Docker
+### Option 1: Try the Live Demo (Instant!)
+Just visit: **https://task-sync-engine-production.up.railway.app**
+
+No installation needed - explore the features right away! ✨
+
+### Option 2: Run Locally (5 Minutes)
+
+**Step 1:** Install Docker
 Download [Docker Desktop](https://www.docker.com/products/docker-desktop/) for Windows or Mac
 
-### Step 2: Start the Application
+**Step 2:** Start the Application
 ```bash
 docker-compose up -d
 ```
 
-### Step 3: Open Your Browser
+**Step 3:** Open Your Browser
 Go to: **http://localhost:8000**
 
-### Step 4: Complete Setup Wizard
+**Step 4:** Complete Setup Wizard
 Follow the visual wizard - no coding needed!
 
 **📖 [Read Full Quick Start Guide →](docs/QUICKSTART.md)**

@@ -4,8 +4,7 @@ A **zero-code task synchronization platform** that works as both a **user-trigge
 
 **🌐 Live Demo:** https://task-sync-engine-production.up.railway.app
 
-[![Deploy to DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/Hijanhv/Task-Sync-Engine-/tree/main)
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/Hijanhv/Task-Sync-Engine-)
+
 
 **🚀 Repository:** https://github.com/Hijanhv/Task-Sync-Engine-
 
